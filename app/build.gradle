@@ -6,6 +6,7 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
 
 }
+apply from: 'jacoco.gradle'
 
 android {
     namespace 'com.example.weatherforecast'
@@ -24,6 +25,7 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            testCoverageEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'ApiKey', debugApiKey
             buildConfigField 'String', 'WeatherBaseURL', debugWeatherBaseURL
@@ -60,9 +62,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
@@ -84,6 +83,19 @@ dependencies {
     }
     kapt 'com.github.bumptech.glide:compiler:4.13.2'
 
-    implementation 'androidx.preference:preference:1.2.1'
+    //Test
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'androidx.test.ext:junit:1.1.5'
+    testImplementation 'org.robolectric:robolectric:4.8.1'
+    testImplementation "androidx.test:core-ktx:1.5.0"
+    testImplementation "org.mockito:mockito-core:4.6.1"
+    testImplementation "org.mockito:mockito-inline:4.6.1"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    testImplementation 'com.google.dagger:hilt-android-testing:2.46'
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.46'
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
 }

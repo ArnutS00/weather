@@ -1,0 +1,95 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+
+def filters = [
+        // android
+        '**/R.class',
+        '**/R$*.class',
+        '**/BuildConfig.*',
+        '**/Manifest*.*',
+        '**/*Test*.*',
+        'android/**/*.*',
+        '**/*JsonAdapter.*',
+        '**/*Model_.*',
+        '**/model/**',
+        '**/adapter/**',
+        '**/*Application.*',
+        '**/*Activity*.*',
+        '**/*Fragment*.*',
+        '**/*Module*.*',
+        '**/*DialogFragment*.*',
+        '**/*Directions*',
+
+        // Sealed and data classes
+        '**/*$Result.*',
+        '**/*$Result$*.*',
+
+        // DI
+        '**/*_MembersInjector.class',
+        '**/Dagger*Component.class',
+        '**/Dagger*Component$Builder.class',
+        '**/*_*Factory.class',
+        '**/di/**',
+        '**/dagger/**',
+
+        // data binding
+        'android/databinding/**/*.class',
+        '**/android/databinding/*Binding.class',
+        '**/android/databinding/*',
+        '**/androidx/databinding/*',
+        '**/databinding/*',
+
+        //Hilt
+        '**/hilt*',
+        '**/hilt_*/**',
+
+        //Specific Paths
+        '**/com/example/weatherforecast/base/view/*',
+        '**/com/example/weatherforecast/data/*Service*.*',
+        '**/com/example/weatherforecast/core/**',
+        '**/*BottomSheet*.*',
+        '**/enum/*'
+
+
+]
+
+project.afterEvaluate {
+    (android.hasProperty('applicationVariants') ? android.'applicationVariants' : android.'libraryVariants')
+            .all { variant ->
+                def variantName = variant.name
+                def testTaskName = "test${variantName.capitalize()}UnitTest"
+
+                tasks.create(name: "${testTaskName}Coverage", type: JacocoReport, dependsOn: "$testTaskName") {
+                    group = "Reporting"
+                    description = "Generate Jacoco coverage reports for the ${variantName.capitalize()} build."
+
+                    reports {
+                        xml.required = true
+                        csv.required = true
+                        html {
+                            required = true
+                            outputLocation = layout.buildDirectory.dir("coverage-reports")
+                        }
+                    }
+
+                    def javaClasses = fileTree(dir: variant.javaCompileProvider.get().destinationDir, excludes: filters)
+                    def kotlinClasses = fileTree(dir: "${buildDir}/tmp/kotlin-classes/${variantName}", excludes: filters)
+                    def variantSourceSets = variant.sourceSets.java.srcDirs.collect { it.path }.flatten()
+
+                    afterEvaluate {
+                        sourceDirectories.from = files(variantSourceSets)
+                        classDirectories.from = files([javaClasses, kotlinClasses])
+                        executionData.from = files("${project.buildDir}/jacoco/${testTaskName}.exec")
+                    }
+                }
+            }
+}
