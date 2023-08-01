@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ToolbarCustomView">
+        <attr name="toolbarTitle" format="reference" />
+        <attr name="isVisibleToolbarBack" format="enum">
+            <enum name="TRUE" value="0" />
+            <enum name="FALSE" value="1" />
+        </attr>
+        <attr name="isVisibleToolbarClose" format="enum">
+            <enum name="TRUE" value="0" />
+            <enum name="FALSE" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>

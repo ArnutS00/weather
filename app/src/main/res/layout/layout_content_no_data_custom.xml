@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_150"
+        android:src="@drawable/ic_no_data"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_marginTop="@dimen/dp_16"
+        android:id="@+id/tvNoDataDescription"
+        android:textSize="@dimen/dp_18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data not found"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

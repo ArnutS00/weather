@@ -1,0 +1,6 @@
+/build
+
+# IntelliJ project files
+*.iml
+.idea/
+.cxx/
