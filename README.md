@@ -7,6 +7,7 @@ for simple project used
  - Coroutine
  - View binding
  - Navigation component
+ - Jacoco Unit test
 
 # Screenshot
 <img src="https://github.com/ArnutS00/weather/assets/26473971/93462c24-c4d2-4a0e-b84b-58e0330e9c8f" width="300" height="600" />
